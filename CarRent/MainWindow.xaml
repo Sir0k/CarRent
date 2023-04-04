@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <!--Нулевой Грид-->
+        <!--Нулевой Гридд-->
         <Image Source="Resources/logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Height="91" Width="360"/>
 
 
