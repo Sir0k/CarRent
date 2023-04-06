@@ -25,7 +25,7 @@
 
             <Image  Name="Logo" Grid.Column="0" Source="Resources/logo.jpg" Margin="12" HorizontalAlignment="Left"/>
             <Label  Name="CatalogName" Grid.Column="1" Content="Каталог автомобилей" FontSize="48" FontFamily="Georgia" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button Name="ExitButton" Grid.Column="2" Content="Выйти из каталога" FontSize="24" Background="CadetBlue" Margin="10"/>
+            <Button Name="ExitButton" Grid.Column="2" Content="Выйти из каталога" FontSize="24" Background="CadetBlue" Margin="10" Click="ExitButton_Click"/>
         </Grid>
 
         <Grid Grid.Row="1">

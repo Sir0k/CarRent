@@ -25,10 +25,8 @@ namespace CarRent
     /// </summary>
     public partial class MainWindow : Window
     {
-        string _login;
-        string _password;
-
-
+        string _login, _password;
+        bool disableButtons = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +36,13 @@ namespace CarRent
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void ToCatalog() 
+        {
+            var catalogPage = new Catalog(disableButtons);
+            catalogPage.Show();
+            this.Close();
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
@@ -55,13 +60,15 @@ namespace CarRent
             else if (worker != null)
             {
                 MessageBox.Show("Вы вошли как " + worker.role.ToString());
-                return;
             }
+            ToCatalog();
         }
 
         private void CatalougeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Вы вошли как гость");
+            disableButtons = true; 
+            ToCatalog();
         }
     }
 }

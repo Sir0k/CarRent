@@ -26,7 +26,7 @@ namespace CarRent
         }
         private void BackToCatalog()
         {
-            var catalogPage = new Catalog();
+            var catalogPage = new Catalog(false);
             catalogPage.Show();
             this.Close();
         }

@@ -28,11 +28,17 @@ namespace CarRent
         string findText;
         int carId;
 
-        public Catalog()
+        public Catalog(bool v)
         {
             InitializeComponent();
             comboBoxSort.SelectedIndex = 0;
             Update();
+            if (v == true)
+            {
+                buttonAddCar.Visibility = Visibility.Hidden;
+                buttonDeleteCar.Visibility = Visibility.Hidden;
+                buttonEditCar.Visibility = Visibility.Hidden;
+            }
         }
 
         private List<AvailableCars> GetAvailableCars() => new Context().AvailableCars.ToList();
@@ -154,6 +160,17 @@ namespace CarRent
                     Update();
                 }
                 else { MessageBox.Show("Выберете автомобиль"); }
+            }
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                var toAuth = new MainWindow();
+                toAuth.Show();
+                this.Close();
             }
         }
     }
