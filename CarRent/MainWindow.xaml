@@ -19,16 +19,16 @@
 
 
         <!--Первый Грид-->
-        <TextBox Name="loginText" Grid.Row="1" Width="300" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="32" />
-        <Label Content="Логин" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" FontFamily="Georgia" FontSize="20"/>
+        <TextBox Text="testLogin" Name="loginText" Grid.Row="1" Width="300" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="32" FontSize="20"/>
+        <Label Content="Логин" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" FontFamily="Georgia" FontSize="24"/>
 
         <!--Второй Грид-->
-        <TextBox Name="passwordText" Grid.Row="2" Width="300" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="32" />
-        <Label Content="Пароль" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" FontFamily="Georgia" FontSize="20" />
+        <PasswordBox Password="testPass" Name="passwordText" Grid.Row="2" Width="300" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="32" FontSize="20" PasswordChar="●"/>
+        <Label Content="Пароль" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" FontFamily="Georgia" FontSize="24" />
 
         <!--Третий Грид-->
         <Button Name="AuthButton" Grid.Row="3" Width="100" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Войти" Margin="25" Click="AuthButton_Click"/>
-        <Button Name="CatalougeButton" Content="Просмотреть каталог" Grid.Row="3" Width="130" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Name="CatalougeButton" Content="Просмотреть каталог" Grid.Row="3" Width="130" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="CatalougeButton_Click"/>
         <Button Name="ExitButton" Content="Выход" Grid.Row="3" Width="60" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Click="CloseWindow"/>
 
     </Grid>

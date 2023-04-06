@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace CarRent
+namespace CarRent.Entities
 {
-    public partial class CarRentDB : DbContext
+    public partial class Context : DbContext
     {
-        public CarRentDB()
-            : base("name=CarRentModelConnectionString")
+        public Context()
+            : base("name=CarRentSettings")
         {
         }
 

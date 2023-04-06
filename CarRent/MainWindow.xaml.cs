@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
-
+using CarRent.Entities;
+using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
 
 namespace CarRent
 {
@@ -23,9 +25,14 @@ namespace CarRent
     /// </summary>
     public partial class MainWindow : Window
     {
+        string _login;
+        string _password;
+
+
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -35,9 +42,25 @@ namespace CarRent
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            //string queryToDB = "select * where ";
-            //SqlConnection sqlcon = SqlConnection(@"Data Source = localhost; Initial Catalog = CarRent; Persist Security Info = True;");
-            //sqlcon.Open();
+            _login = loginText.Text;
+            _password = passwordText.Password;
+
+            var worker = new Entities.Context().Workers.Where(x => x.login == _login && x.password == _password).FirstOrDefault();
+
+
+            if (loginText.Text == "" || passwordText.Password == "") { MessageBox.Show("Введите все данные"); return; }
+
+            if (worker == null) { MessageBox.Show("Пользователь не найден"); return; }
+
+            else if (worker != null)
+            {
+                MessageBox.Show("Вы вошли как " + worker.role.ToString());
+                return;
+            }
+        }
+
+        private void CatalougeButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

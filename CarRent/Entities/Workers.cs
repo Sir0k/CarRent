@@ -1,4 +1,4 @@
-namespace CarRent
+namespace CarRent.Entities
 {
     using System;
     using System.Collections.Generic;
