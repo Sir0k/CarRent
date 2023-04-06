@@ -61,7 +61,7 @@ namespace CarRent
         {
             using (Context db = new Context())
             {
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этот автомобиль?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите изменить этот автомобиль?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     var car = db.AvailableCars.Where(x => x.ID_car == editCarId).FirstOrDefault();
@@ -74,9 +74,32 @@ namespace CarRent
                     car.price_for_day = int.Parse(textBoxPriceForDay.Text);
                     db.SaveChanges();
 
-                    MessageBox.Show("Автомобиль успешно добавлен");
+                    MessageBox.Show("Автомобиль успешно изменен");
                     BackToCatalog();
                 }
+            }
+        }
+
+        private async Task LoadImageAsync(string path)
+        {
+            BitmapImage previewImg = new BitmapImage();
+            previewImg.BeginInit();
+            previewImg.UriSource = new Uri(path);
+            previewImg.EndInit();
+
+            ImagePreview.Source = previewImg;
+        }
+
+        private async void ButtonLoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                await LoadImageAsync(openFileDialog.FileName);
             }
         }
     }

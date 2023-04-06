@@ -1,7 +1,9 @@
 ﻿using CarRent.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CarRent
 {
@@ -20,10 +23,40 @@ namespace CarRent
     /// </summary>
     public partial class AddCar : Window
     {
-        public AddCar()
+        private string _pathToImage = null;
+        bool _isSuccessfulImageLoaded = false;
+        bool _isEdit = false;
+
+
+        public AddCar(AvailableCars availableCar)
         {
             InitializeComponent();
+            Car = availableCar;
+            if (Car != null)
+            {
+                textBoxBrand.Text = Car.brand;
+                textBoxModel.Text = Car.model;
+                textBoxEngine.Text = Car.engine;
+                textBoxBody.Text = Car.body;
+                textBoxColor.Text = Car.color;
+                textBoxPriceForDay.Text = Car.price_for_day.ToString();
+                ImagePreview.Source = Car.ImageData != null ? Helper.LoadImageFromData(Car.ImageData) : new BitmapImage(new Uri("/Resources/no-image.jpg", UriKind.Relative));
+
+                _isEdit = true;
+                
+            }
+            else
+            {
+                Car = new AvailableCars();
+            }
+            
         }
+
+        
+        public AvailableCars Car { get; set; }
+
+
+
         private void BackToCatalog()
         {
             var catalogPage = new Catalog(false);
@@ -35,25 +68,54 @@ namespace CarRent
         {
             using (Context db = new Context())
             {
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите добавить этот автомобиль?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить этот автомобиль?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var car = new AvailableCars
-                    {
-                        brand = textBoxBrand.Text,
-                        model = textBoxModel.Text,
-                        engine = textBoxEngine.Text,
-                        body = textBoxBody.Text,
-                        color = textBoxColor.Text,
-                        price_for_day = int.Parse(textBoxPriceForDay.Text),
-                        availability = true
-                    };
-                    db.AvailableCars.Add(car);
+                    Car.brand = textBoxBrand.Text;
+                    Car.model = textBoxModel.Text;
+                    Car.engine = textBoxEngine.Text;
+                    Car.body = textBoxBody.Text;
+                    Car.color = textBoxColor.Text;
+                    Car.price_for_day = int.Parse(textBoxPriceForDay.Text);
+                    Car.availability = true;
+                    Car.ImageData = _isSuccessfulImageLoaded == true ? File.ReadAllBytes(_pathToImage) : null;
+                    
+                    db.AvailableCars.Add(Car);
                     db.SaveChanges();
-                    MessageBox.Show("Автомобиль успешно добавлен");
+                    MessageBox.Show("Автомобиль успешно добавлен"); 
                     BackToCatalog();
                 }
+            }
+        }
+        private async Task LoadImageAsync(string path)
+        {
+            if (!File.Exists(path)) 
+            {
+                _isSuccessfulImageLoaded = false;
+                return; 
+            }
+            BitmapImage previewImg = new BitmapImage();
+            previewImg.BeginInit();
+            
+            previewImg.UriSource = new Uri(path);
+            previewImg.EndInit();
+
+            ImagePreview.Source = previewImg;
+            _pathToImage = path;
+            _isSuccessfulImageLoaded = true;
+        }
+
+        private async void ButtonLoadImage_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+
+            bool? result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                await LoadImageAsync(openFileDialog.FileName);
             }
         }
 

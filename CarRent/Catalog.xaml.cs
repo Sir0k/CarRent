@@ -118,14 +118,13 @@ namespace CarRent
 
         private void buttonAddCar_Click(object sender, RoutedEventArgs e)
         {
-            var addCarPage = new AddCar();
+            var addCarPage = new AddCar(null);
             addCarPage.Show();
             this.Close();
         }
 
         private void buttonEditCar_Click(object sender, RoutedEventArgs e)
         {
-            
 
             if (CarList.SelectedItem != null)
             {
@@ -133,7 +132,7 @@ namespace CarRent
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var editCarPage = new EditCar(carId);
+                    var editCarPage = new AddCar(CarList.SelectedItem as AvailableCars);
                     editCarPage.Show();
                     this.Close();
                 }

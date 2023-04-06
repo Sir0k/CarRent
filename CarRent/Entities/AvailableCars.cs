@@ -34,5 +34,7 @@ namespace CarRent.Entities
         public int price_for_day { get; set; }
 
         public bool availability { get; set; }
+
+        public Byte[] ImageData { get; set; }
     }
 }

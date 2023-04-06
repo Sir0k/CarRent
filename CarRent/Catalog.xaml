@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CarRent"
+        xmlns:local="clr-namespace:CarRent" xmlns:converters="clr-namespace:CarRent.Converters"
         mc:Ignorable="d"
         Title="Catalog" Height="800" Width="1500" WindowStartupLocation="CenterScreen"
         >
-    
+    <Window.Resources>
+        <converters:ImageByteToBitmapImageConvert x:Key="ImageConvert"/>
+        <converters:TrimStringConverter x:Key="StringTrimConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.7*"></RowDefinition>
@@ -53,43 +56,46 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Content="{Binding brand}" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Right" ></Label>
-                        <Label Grid.Column="1" Content="{Binding model}" BorderThickness="1" BorderBrush="Black"></Label>
-                        <Label Grid.Column="2" BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" >
-                            <TextBlock HorizontalAlignment="Left" >
-                                <Run Text="{Binding engine, StringFormat={}{0:F0}}"/>
-                                <Run Text=" л.с."/>
-                            </TextBlock>
-                        </Label>
-                        <Label Grid.Column="3" Content="{Binding body}" BorderThickness="1" BorderBrush="Black"></Label>
-                        <Label Grid.Column="4" Content="{Binding color}" BorderThickness="1" BorderBrush="Black"></Label>
-                        <Label Grid.Column="5"  BorderThickness="1" BorderBrush="Black">
+                        <Image Grid.Column="0" Source="{Binding ImageData,Converter={StaticResource ImageConvert}}" Margin="15"/>
+                        <TextBlock Grid.Column="1" Margin="15" FontSize="18" FontFamily="Georgia">
+                            <Run Text="Марка автомобиля: "/>
+                            <Run Text="{Binding brand}"/>
+                            <LineBreak/>
+                            <Run Text="Модель автомобиля: "/>
+                            <Run Text="{Binding model}"/>
+                            <LineBreak/>
+                            <Run Text="Мощность двигателя: "/>
+                            <Run Text="{Binding engine, Converter={StaticResource StringTrimConverter}}"/>
+                            <Run Text="л.с."/>  
+                            <LineBreak/>
+                            <Run Text="Форма кузова: "/>
+                            <Run Text="{Binding body}"/>
+                            <LineBreak/>
+                            <Run Text="Цвет: "/>
+                            <Run Text="{Binding color}"/>
+                            <LineBreak/>
+                            <Run Text="Цена в день: "/>
+                            <Run Text="{Binding price_for_day, Converter={StaticResource StringTrimConverter}}"/>
+                            <Run Text="р."/> 
+                            <LineBreak/>
+                            <Run Text="Доступность: "/>
                             <TextBlock>
-                                        <Run Text="{Binding price_for_day}"/>
-                                        <Run Text="р."/>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding availability}" Value="True">
+                                                <Setter Property="Text" Value="Доступно" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding availability}" Value="False">
+                                                <Setter Property="Text" Value="Недоступно" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
                             </TextBlock>
-                        </Label>
-                        <Label Grid.Column="6" BorderThickness="1" BorderBrush="Black">
-                            <Label.Style>
-                                <Style TargetType="Label">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding availability}" Value="True" >
-                                            <Setter Property="Content" Value="Доступно" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding availability}" Value="False">
-                                            <Setter Property="Content" Value="Недоступно" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Label.Style>
-                        </Label>
+                        </TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
