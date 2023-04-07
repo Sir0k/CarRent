@@ -125,6 +125,10 @@
     <Compile Include="Migrations\202304061909568_migrationTest.designer.cs">
       <DependentUpon>202304061909568_migrationTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304070829267_ImageAdd.cs" />
+    <Compile Include="Migrations\202304070829267_ImageAdd.designer.cs">
+      <DependentUpon>202304070829267_ImageAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304061909568_migrationTest.resx">
       <DependentUpon>202304061909568_migrationTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304070829267_ImageAdd.resx">
+      <DependentUpon>202304070829267_ImageAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

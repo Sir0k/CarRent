@@ -58,8 +58,8 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Source="{Binding ImageData,Converter={StaticResource ImageConvert}}" Margin="15"/>
-                        <TextBlock Grid.Column="1" Margin="15" FontSize="18" FontFamily="Georgia">
+                        <Image Grid.Column="0" Source="{Binding ImageData,Converter={StaticResource ImageConvert}}" Margin="15" Width="150" Height="150"/>
+                        <TextBlock Grid.Column="1" Margin="15" FontSize="15" FontFamily="Georgia">
                             <Run Text="Марка автомобиля: "/>
                             <Run Text="{Binding brand}"/>
                             <LineBreak/>

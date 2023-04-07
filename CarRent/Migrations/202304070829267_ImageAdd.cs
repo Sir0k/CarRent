@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class migrationTest : DbMigration
+    public partial class ImageAdd : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,6 @@
         
         public override void Down()
         {
-            
         }
     }
 }

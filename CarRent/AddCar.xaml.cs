@@ -1,6 +1,7 @@
 ﻿using CarRent.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
@@ -70,22 +71,46 @@ namespace CarRent
             {
                 MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите сохранить этот автомобиль?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                if (result == MessageBoxResult.Yes)
+                if ( _isEdit == false) 
                 {
-                    Car.brand = textBoxBrand.Text;
-                    Car.model = textBoxModel.Text;
-                    Car.engine = textBoxEngine.Text;
-                    Car.body = textBoxBody.Text;
-                    Car.color = textBoxColor.Text;
-                    Car.price_for_day = int.Parse(textBoxPriceForDay.Text);
-                    Car.availability = true;
-                    Car.ImageData = _isSuccessfulImageLoaded == true ? File.ReadAllBytes(_pathToImage) : null;
-                    
-                    db.AvailableCars.Add(Car);
-                    db.SaveChanges();
-                    MessageBox.Show("Автомобиль успешно добавлен"); 
-                    BackToCatalog();
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Car.brand = textBoxBrand.Text;
+                        Car.model = textBoxModel.Text;
+                        Car.engine = textBoxEngine.Text;
+                        Car.body = textBoxBody.Text;
+                        Car.color = textBoxColor.Text;
+                        Car.price_for_day = int.Parse(textBoxPriceForDay.Text);
+                        Car.availability = true;
+                        Car.ImageData = _isSuccessfulImageLoaded == true ? File.ReadAllBytes(_pathToImage) : null;
+
+                        db.AvailableCars.Add(Car);
+                        db.SaveChanges();
+                        MessageBox.Show("Автомобиль успешно сохранен");
+                        BackToCatalog();
+                    }
                 }
+                else
+                {
+                    //var car = db.AvailableCars.Where(x => x.ID_car == editCarId).FirstOrDefault();
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Car.brand = textBoxBrand.Text;
+                        Car.model = textBoxModel.Text;
+                        Car.engine = textBoxEngine.Text;
+                        Car.body = textBoxBody.Text;
+                        Car.color = textBoxColor.Text;
+                        Car.price_for_day = int.Parse(textBoxPriceForDay.Text);
+                        Car.availability = true;
+                        Car.ImageData = _isSuccessfulImageLoaded == true ? File.ReadAllBytes(_pathToImage) : null;
+                        db.Entry(Car).State = EntityState.Modified; 
+                        db.SaveChanges();
+
+                        MessageBox.Show("Автомобиль успешно изменен");
+                        BackToCatalog();
+                    }
+                }
+
             }
         }
         private async Task LoadImageAsync(string path)
